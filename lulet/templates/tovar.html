@@ -1,0 +1,50 @@
+
+{% extends 'flatpages/default2.html' %}
+
+{% block title %}
+tovar
+{% endblock title %}
+
+{% block content %}
+   <h1>товар № {{ tovar.id }}</h1>
+   <hr>
+   {% if tovar.reshenie_moderator == 1 %}
+       <table class="table-bordered" width="100%">
+           <tr align="left">
+               <th>nametov</th>
+               <th>tekst</th>
+               <th>price</th>
+               <th>kolvo</th>
+               <th>data_izm</th>
+               <th>reshenie_moderator</th>
+               <th>images</th>
+               <th>category</th>
+               <th>изменить</th>
+               <th>удалить</th>
+           </tr>
+           <tr align="left">
+               <td width="10%">{{ tovar.nametov }}</td>
+               <td width="20%">{{ tovar.tekst }}</td>
+               <td width="10%">{{ tovar.price }}</td>
+               <td width="10%">{{ tovar.kolvo }}</td>
+               <td width="20%">{{ tovar.data_izm }}</td>
+               <td width="10%">{{ tovar.reshenie_moderator }}</td>
+               <td width="10%">{{ tovar.images }}</td> <!--{{ tovar.image.url }}{{ tovar.images }}-->
+               <td width="10%">
+                   {% for category in tovar.category.all %}
+                    <a href="{% url 'category_list' category.id %}">{{ category }}</a>
+                   {% endfor %}
+               </td>
+               <td width="10%"><a href="/tovars/edit/{{tovar.id}}">изменить</a></td>
+               <td width="10%"><a href="/tovars/delete/{{tovar.id}}">удалить</a></td>
+           </tr>
+           </table>
+   {% else %}
+       <h2>товаров нет!</h2>
+
+   {% endif %}
+
+<p><a href="/tovars/create/">добавить товар</a></p>
+<p><a href="{{ request.META.HTTP_REFERER }}">назад</a></p>
+
+{% endblock content %}

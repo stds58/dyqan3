@@ -1,0 +1,24 @@
+{% extends 'flatpages/default2.html' %}
+
+{% block content %}
+<h1>новые товары</h1>
+<hr>
+<form action="" method="post" enctype="multipart/form-data" onchange="loadFile(event)">
+    {% csrf_token %}
+    {{ form.as_p }}
+<img id="output"/>
+    <script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+    output.onload = function() {
+      URL.revokeObjectURL(output.src) // free memory
+    }
+  };
+</script>
+    <input type="submit" value="сохранить" />
+</form>
+<a href="{{ request.META.HTTP_REFERER }}">назад</a>
+
+
+{% endblock content %}

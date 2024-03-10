@@ -1,0 +1,12 @@
+{% extends 'flatpages/default2.html' %}
+
+{% block content %}
+<h1>Удаление товара</h1>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>Удаляем "{{ object.nametov }}"?</p>
+    <input type="submit" value="удалить" />
+</form>
+<a href="{{ request.META.HTTP_REFERER }}">назад</a>
+{% endblock content %}

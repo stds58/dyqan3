@@ -1,0 +1,75 @@
+
+{% extends 'flatpages/default2.html' %}
+
+{% block title %}
+tovars
+{% endblock title %}
+
+{% block content %}
+   <h1>Все товары</h1>
+   <p><a href="/tovars/search/">поиск товаров</a></p>
+   <hr>
+   {% if tovars %}
+       <table class="table-bordered" width="100%">
+           <tr align="left">
+               <th>nametov</th>
+               <th>tekst</th>
+               <th>price</th>
+               <th>kolvo</th>
+               <th>data_izm</th>
+               <th>reshenie_moderator</th>
+               <th>images</th>
+               <th>category</th>
+               <th>изменить</th>
+               <th>удалить</th>
+           </tr>
+           {% for tovar in tovars %}
+           <tr align="left">
+               <td width="10%"><a href="/tovars/{{tovar.id}}">{{ tovar.nametov }}</a></td>
+               <td width="20%">{{ tovar.tekst }}</td>
+               <td width="10%">{{ tovar.price }}</td>
+               <td width="10%">{{ tovar.kolvo }}</td>
+              <td width="20%">{{ tovar.data_izm }}</td>
+               <td width="10%">{{ tovar.reshenie_moderator }}</td>
+               <!--<td width="10%">{{ tovar.images }}</td>-->
+               <td width="10%">
+                   {% for image in tovar.images.all %}
+                    <a href="{% url 'image_detail' image.id %}">{{ image }}</a>
+                   {% endfor %}
+               </td>
+               <td width="10%">
+                   {% for category in tovar.category.all %}
+                    <a href="{% url 'category_list' category.id %}">{{ category }}</a>
+                   {% endfor %}
+               </td>
+               <td width="10%"><a href="/tovars/edit/{{tovar.id}}">изменить</a></td>
+               <td width="10%"><a href="/tovars/delete/{{tovar.id}}">удалить</a></td>
+           </tr>
+           {% endfor %}
+
+
+       </table>
+   {% else %}
+       <h2>товаров нет!</h2>
+   {% endif %}
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+   {{ page_obj.number }}
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
+<p><a href="/tovars/create/">добавить товар</a></p>
+<p><a href="{{ request.META.HTTP_REFERER }}">назад</a></p>
+
+{% endblock content %}
+

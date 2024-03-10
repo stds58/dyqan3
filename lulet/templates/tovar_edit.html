@@ -1,0 +1,16 @@
+{% extends 'flatpages/default2.html' %}
+{% load custom_tags %}
+{% block title %}
+Post
+{% endblock title %}
+{% block content %}
+<h1>новые товары</h1>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p|zamena }}
+    <input type="submit" value="сохранить" />
+</form>
+
+<a href="{{ request.META.HTTP_REFERER }}">назад</a>
+{% endblock content %}
